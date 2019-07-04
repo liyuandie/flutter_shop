@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import '../config/httpHeaders.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -7,69 +8,50 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  TextEditingController typeController = TextEditingController();
-  String showText = '欢迎来到浪漫一生高级会所';
+  String showText = '还没有请求数据';
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('浪漫一生'),
+          title: Text('请求远程数据'),
         ),
-        body: Column(
-          children: <Widget>[
-            TextField(
-              controller: typeController,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10.0),
-                labelText: '美女类型',
-                helperText: '请输入您喜欢的类型',
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              RaisedButton(
+                onPressed: _jike,
+                child: Text('请求数据'),
               ),
-              autofocus: false,
-            ),
-            RaisedButton(
-              onPressed: () {
-                _choiceAction();
-              },
-              child: Text('选择完毕'),
-            ),
-            Text(
-              showText,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            )
-          ],
+              Text(showText)
+            ],
+          ),
         ),
       ),
     );
   }
 
-  void _choiceAction() {
-    print('开始选择你喜欢的类型');
-    if (typeController.text.toString() == '') {
-      showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-                title: Text('你还没有输入您喜欢的美女类型'),
-              ));
-    } else {
-      getHttp(typeController.text.toString()).then((value) {
-        setState(() {
-          showText = value['data']['name'].toString();
-        });
+  void _jike() {
+    print("开始向极客时间请求数据");
+    getHttp().then((value) {
+      setState(() {
+        showText = value['data'].toString();
       });
-    }
+    });
   }
 
-  Future getHttp(String typeText) async {
+  Future getHttp() async {
     try {
       Response response;
-      var data = {'name': typeText};
-      response = await Dio().get(
-          'https://www.easy-mock.com/mock/5c60131a4bed3a6342711498/baixing/dabaojian',
-          queryParameters: data);
-      print(response.data);
+      Dio dio = new Dio();
+      dio.options.headers = httpHeaders;
+      response =
+          await dio.get('https://time.geekbang.org/serv/v1/column/newAll');
+      print(response);
       return response.data;
-    } catch (e) {}
+    } catch (e) {
+      return print(e);
+    }
   }
 }
