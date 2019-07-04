@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import '../config/httpHeaders.dart';
+import '../service/service_method.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'dart:convert';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,50 +10,74 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String showText = '还没有请求数据';
+  String homePageContent = '正在获取数据';
+
+  // @override
+  // void initState() {
+  //   getHomePageContent().then((val) {
+  //     setState(() {
+  //       homePageContent = val.toString();
+  //     });
+  //   });
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-          title: Text('请求远程数据'),
+          title: Text('百姓生活+'),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: <Widget>[
-              RaisedButton(
-                onPressed: _jike,
-                child: Text('请求数据'),
-              ),
-              Text(showText)
-            ],
-          ),
-        ),
+        body: FutureBuilder(
+          future: getHomePageContent(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var data = json.decode(snapshot.data.toString());
+              List<Map> swiper = (data['data']['slides'] as List).cast();
+              return Column(
+                children: <Widget>[
+                  HomeSwiper(
+                    swiperDataList: swiper,
+                  )
+                ],
+              );
+            } else {
+              return Center(
+                child: Text('加载中'),
+              );
+            }
+          },
+        ));
+  }
+}
+
+//首页轮播组件
+class HomeSwiper extends StatelessWidget {
+  final List swiperDataList;
+
+  HomeSwiper({this.swiperDataList});
+
+  @override
+  Widget build(BuildContext context) {
+    // var s_height = ScreenUtil.screenHeight;
+    // var s_width = ScreenUtil.screenWidth;
+    // print('屏幕高度：$s_height');
+    // print('屏幕宽度：$s_width');
+    ScreenUtil.instance = ScreenUtil(height: 1334, width: 750)..init(context);
+    return Container(
+      height: ScreenUtil().setHeight(333),
+      width: ScreenUtil().setWidth(750),
+      child: new Swiper(
+        itemBuilder: (BuildContext context, int index) {
+          return Image.network(
+            '${swiperDataList[index]['image']}',
+            fit: BoxFit.cover,
+          );
+        },
+        itemCount: swiperDataList.length,
+        pagination: new SwiperPagination(),
+        autoplay: true,
       ),
     );
-  }
-
-  void _jike() {
-    print("开始向极客时间请求数据");
-    getHttp().then((value) {
-      setState(() {
-        showText = value['data'].toString();
-      });
-    });
-  }
-
-  Future getHttp() async {
-    try {
-      Response response;
-      Dio dio = new Dio();
-      dio.options.headers = httpHeaders;
-      response =
-          await dio.get('https://time.geekbang.org/serv/v1/column/newAll');
-      print(response);
-      return response.data;
-    } catch (e) {
-      return print(e);
-    }
   }
 }
