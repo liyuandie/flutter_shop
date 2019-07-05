@@ -40,3 +40,8 @@ Future getHomePageContent() {
 Future getHomePageBelowContent(formData) {
   return requestData('homePageBelowConten', formData: formData);
 }
+
+// 获取分类页面内容
+Future getCategoryPageContent() {
+  return requestData('getCategory');
+}
