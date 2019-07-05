@@ -10,7 +10,11 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
   String homePageContent = '正在获取数据';
 
   // @override
@@ -22,6 +26,13 @@ class _HomePageState extends State<HomePage> {
   //   });
   //   super.initState();
   // }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    print('页面初始化'); //测试是否保持页面状态
+  }
 
   @override
   Widget build(BuildContext context) {
