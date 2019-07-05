@@ -284,6 +284,7 @@ class TopNavigator extends StatelessWidget {
       padding: EdgeInsets.all(3.0),
       child: GridView.count(
         crossAxisCount: 5,
+        physics: NeverScrollableScrollPhysics(),
         padding: EdgeInsets.all(5.0),
         children: navigatorList.map((item) {
           return _gridViewItemUI(context, item);
@@ -397,6 +398,7 @@ class Recommond extends StatelessWidget {
       height: ScreenUtil().setHeight(330),
       // margin: EdgeInsets.only(top: 10.0),
       child: ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
         itemBuilder: (context, index) {
@@ -412,9 +414,10 @@ class Recommond extends StatelessWidget {
       margin: EdgeInsets.only(top: 10.0),
       height: ScreenUtil().setHeight(380),
       child: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
-        children: <Widget>[_titleWidget(), _recommendList()],
-      )),
+            children: <Widget>[_titleWidget(), _recommendList()],
+          )),
     );
   }
 }
