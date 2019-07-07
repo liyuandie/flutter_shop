@@ -45,3 +45,8 @@ Future getHomePageBelowContent(formData) {
 Future getCategoryPageContent() {
   return requestData('getCategory');
 }
+
+// 获取分类页面内容
+Future getMallGoods(formData) {
+  return requestData('getMallGoods', formData: formData);
+}
