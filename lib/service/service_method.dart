@@ -19,7 +19,7 @@ Future requestData(url, {formData}) async {
     }
     if (response.statusCode == 200) {
       // var _data = json.decode(response.data.toString());
-      // print(_data['data']['shopInfo']);
+      // print(_data['data']);
       return response.data;
     } else {
       throw Exception('后端接口有异常');
