@@ -80,6 +80,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
         var categoryId = list[index].mallCategoryId;
         Provide.value<ChildCategory>(context).getChildCategory(childList);
         getGoodsList(categoryId: categoryId);
+        // Provide.value<ChildCategory>(context).changeChildIndex(0);
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -157,7 +158,8 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
             scrollDirection: Axis.horizontal,
             itemCount: childCategory.childCategoryList.length,
             itemBuilder: (context, index) {
-              return _rightInkWell(childCategory.childCategoryList[index]);
+              return _rightInkWell(
+                  childCategory.childCategoryList[index], index);
             },
           ),
         );
@@ -165,14 +167,20 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     );
   }
 
-  Widget _rightInkWell(BxMallSubDto item) {
+  Widget _rightInkWell(BxMallSubDto item, index) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Provide.value<ChildCategory>(context).changeChildIndex(index);
+      },
       child: Container(
         padding: EdgeInsets.fromLTRB(5.0, 10.0, 10.0, 10.0),
         child: Text(
           item.mallSubName,
-          style: TextStyle(fontSize: ScreenUtil().setSp(28)),
+          style: TextStyle(
+              fontSize: ScreenUtil().setSp(28),
+              color: Provide.value<ChildCategory>(context).childIndex == index
+                  ? Colors.pink
+                  : Colors.black),
         ),
       ),
     );
