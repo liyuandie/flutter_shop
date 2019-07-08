@@ -7,4 +7,5 @@ const servicePath = {
       serviceUrl + 'wxmini/homePageBelowConten', // 首页商城底部火爆专区
   'getCategory': serviceUrl + 'wxmini/getCategory', // 商品类别信息
   'getMallGoods': serviceUrl + 'wxmini/getMallGoods', // 商品分类的商品列表信息
+  'getGoodDetailById': serviceUrl + 'wxmini/getGoodDetailById', // 获取商品详细信息
 };

@@ -50,3 +50,8 @@ Future getCategoryPageContent() {
 Future getMallGoods(formData) {
   return requestData('getMallGoods', formData: formData);
 }
+
+// 获取分类页面内容
+Future getGoodsDetail(formData) {
+  return requestData('getGoodDetailById', formData: formData);
+}
