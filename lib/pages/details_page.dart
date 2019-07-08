@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../provide/details_info.dart';
+import './details_pages/details_top.dart';
 
 class DetailsPage extends StatelessWidget {
   final String goodsId;
@@ -9,15 +10,35 @@ class DetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _getDetailsInfo(context);
-    return Container(
-      child: Center(
-        child: Text('商品Id为：$goodsId'),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: Text('商品详情'),
+      ),
+      body: FutureBuilder(
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              child: Column(
+                children: <Widget>[DetailsTop()],
+              ),
+            );
+          } else {
+            Text('加载中...');
+          }
+        },
+        future: _getDetailsInfo(context),
       ),
     );
   }
 
-  void _getDetailsInfo(BuildContext context) async {
+  Future _getDetailsInfo(BuildContext context) async {
     await Provide.value<DetailInfoProvide>(context).getGoodsDetailInfo(goodsId);
-    print('加载完成');
+    return 'finish loading';
   }
 }
