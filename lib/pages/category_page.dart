@@ -9,6 +9,7 @@ import '../provide/childCategory.dart';
 import '../provide/category_goods_list.dart';
 import 'package:provide/provide.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -221,13 +222,13 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
-        try {
-          if (Provide.value<ChildCategory>(context).page == 1) {
-            scrollController.jumpTo(0.0);
-          }
-        } catch (e) {
-          print('进入页面第一次初始化：$e');
-        }
+        // try {
+        //   if (Provide.value<ChildCategory>(context).page == 1) {
+        //     scrollController.jumpTo(0.0);
+        //   }
+        // } catch (e) {
+        //   print('进入页面第一次初始化：$e');
+        // }
 
         return Expanded(
             child: Container(
@@ -242,7 +243,7 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
               moreInfoColor: Colors.pink,
               showMore: true,
               noMoreText: Provide.value<ChildCategory>(context).noMoreText,
-              moreInfo: '加载中...',
+              moreInfo: '加载中',
               loadReadyText: '上拉加载',
               key: _footerkey,
               loadedText: '加载完成',
@@ -330,6 +331,13 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
       var data = json.decode(val.toString());
       MallGoodsListModel goodsList = MallGoodsListModel.fromJson(data);
       if (goodsList.data == null) {
+        // Fluttertoast.showToast(
+        //     msg: '已经到底啦',
+        //     toastLength: Toast.LENGTH_SHORT,
+        //     gravity: ToastGravity.BOTTOM,
+        //     backgroundColor: Colors.pink,
+        //     textColor: Colors.white,
+        //     fontSize: 16);
         Provide.value<ChildCategory>(context).changeoMoreText('没有更多了');
       } else {
         Provide.value<CategoryGoodsListProvide>(context)
