@@ -162,7 +162,8 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
   Widget _rightInkWell(BxMallSubDto item, index) {
     return InkWell(
       onTap: () {
-        Provide.value<ChildCategory>(context).changeChildIndex(index);
+        Provide.value<ChildCategory>(context)
+            .changeChildIndex(index, item.mallSubId);
         _updateList(item.mallSubId);
       },
       child: Container(
@@ -188,8 +189,12 @@ class _RightCategoryNavState extends State<RightCategoryNav> {
     await getMallGoods(formData).then((val) {
       var data = json.decode(val.toString());
       MallGoodsListModel goodsList = MallGoodsListModel.fromJson(data);
-      Provide.value<CategoryGoodsListProvide>(context)
-          .changeGoodsList(goodsList.data);
+      if (goodsList.data == null) {
+        Provide.value<CategoryGoodsListProvide>(context).changeGoodsList([]);
+      } else {
+        Provide.value<CategoryGoodsListProvide>(context)
+            .changeGoodsList(goodsList.data);
+      }
     });
   }
 }
@@ -205,6 +210,8 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   GlobalKey<RefreshFooterState> _footerkey =
       new GlobalKey<RefreshFooterState>();
 
+  var scrollController = new ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -214,17 +221,44 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
   Widget build(BuildContext context) {
     return Provide<CategoryGoodsListProvide>(
       builder: (context, child, data) {
+        try {
+          if (Provide.value<ChildCategory>(context).page == 1) {
+            scrollController.jumpTo(0.0);
+          }
+        } catch (e) {
+          print('进入页面第一次初始化：$e');
+        }
+
         return Expanded(
-          child: Container(
-              margin: EdgeInsets.only(top: 2.0),
-              width: ScreenUtil().setWidth(570),
-              // height: ScreenUtil().setHeight(1000),
-              // margin: EdgeInsets.only(left: 2.5),
-              child: ListView(
-                children: <Widget>[_wrapList(data.goodsList)],
-                // scrollDirection: Axis.vertical,
-              )),
-        );
+            child: Container(
+          margin: EdgeInsets.only(top: 2.0),
+          width: ScreenUtil().setWidth(570),
+          // height: ScreenUtil().setHeight(1000),
+          // margin: EdgeInsets.only(left: 2.5),
+          child: EasyRefresh(
+            refreshFooter: ClassicsFooter(
+              bgColor: Colors.white,
+              textColor: Colors.pink,
+              moreInfoColor: Colors.pink,
+              showMore: true,
+              noMoreText: Provide.value<ChildCategory>(context).noMoreText,
+              moreInfo: '加载中...',
+              loadReadyText: '上拉加载',
+              key: _footerkey,
+              loadedText: '加载完成',
+              loadHeight: 40.0,
+            ),
+            child: ListView(
+              controller: scrollController,
+              children: <Widget>[_wrapList(data.goodsList)],
+              // scrollDirection: Axis.vertical,
+            ),
+            loadMore: () async {
+              print('上拉加载更多');
+              _loadmore();
+            },
+          ),
+        ));
       },
     );
   }
@@ -278,7 +312,29 @@ class _CategoryGoodsListState extends State<CategoryGoodsList> {
         children: listWidget,
       );
     } else {
-      return Text('该分类下暂无产品');
+      return Text(
+        '该分类下暂无产品',
+        textAlign: TextAlign.center,
+      );
     }
+  }
+
+  void _loadmore() async {
+    Provide.value<ChildCategory>(context).addPage();
+    var formData = {
+      'categoryId': Provide.value<ChildCategory>(context).categoryId,
+      'categorySubId': Provide.value<ChildCategory>(context).categorySubId,
+      'page': Provide.value<ChildCategory>(context).page,
+    };
+    await getMallGoods(formData).then((val) {
+      var data = json.decode(val.toString());
+      MallGoodsListModel goodsList = MallGoodsListModel.fromJson(data);
+      if (goodsList.data == null) {
+        Provide.value<ChildCategory>(context).changeoMoreText('没有更多了');
+      } else {
+        Provide.value<CategoryGoodsListProvide>(context)
+            .loadMoreGoodsList(goodsList.data);
+      }
+    });
   }
 }

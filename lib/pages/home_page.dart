@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage>
                   moreInfoColor: Colors.pink,
                   showMore: true,
                   noMoreText: '',
-                  // moreInfo: '加载中...',
+                  moreInfo: '加载中...',
                   loadReadyText: '上拉加载',
                   key: _footerkey,
                 ),
