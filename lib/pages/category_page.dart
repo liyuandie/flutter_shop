@@ -3,9 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../service/service_method.dart';
 import 'dart:convert';
 import '../model/category.dart';
+import '../model/mallGoodsList.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../provide/childCategory.dart';
+import '../provide/category_goods_list.dart';
 import 'package:provide/provide.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class CategoryPage extends StatefulWidget {
   @override
@@ -46,6 +49,7 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
   @override
   void initState() {
     _getCategory();
+    getGoodsList();
     super.initState();
   }
 
@@ -73,7 +77,9 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
           currentIndex = index;
         });
         var childList = list[index].bxMallSubDto;
+        var categoryId = list[index].mallCategoryId;
         Provide.value<ChildCategory>(context).getChildCategory(childList);
+        getGoodsList(categoryId: categoryId);
       },
       child: Container(
         height: ScreenUtil().setHeight(100),
@@ -105,6 +111,26 @@ class _LeftCategoryNavState extends State<LeftCategoryNav> {
       // return category.data;
     });
   }
+
+  void getGoodsList({String categoryId}) async {
+    var formData = {
+      'categoryId': categoryId == null ? '4' : categoryId,
+      'CategorySubId': '',
+      'page': 1
+    };
+    await getMallGoods(formData).then((val) {
+      var data = json.decode(val.toString());
+      MallGoodsListModel goodsList = MallGoodsListModel.fromJson(data);
+      // print('商品列表》》》》》》》${goodsList.data[0].goodsName}');
+
+      // List<Map> newGoodsList = (data['data'] as List).cast();
+      // setState(() {
+      //   goodsList.addAll(newGoodsList);
+      // });
+      Provide.value<CategoryGoodsListProvide>(context)
+          .changeGoodsList(goodsList.data);
+    });
+  }
 }
 
 class RightCategoryNav extends StatefulWidget {
@@ -112,6 +138,7 @@ class RightCategoryNav extends StatefulWidget {
   _RightCategoryNavState createState() => _RightCategoryNavState();
 }
 
+//小类右侧导航
 class _RightCategoryNavState extends State<RightCategoryNav> {
   // List list = ['名酒', '宝丰', '北京二锅头', '舍得', '五粮液', '茅台'];
 
@@ -159,24 +186,90 @@ class CategoryGoodsList extends StatefulWidget {
 }
 
 class _CategoryGoodsListState extends State<CategoryGoodsList> {
+  int page = 1;
+  GlobalKey<RefreshFooterState> _footerkey =
+      new GlobalKey<RefreshFooterState>();
+
   @override
   void initState() {
-    getGoodsList();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('商品列表'),
+    return Provide<CategoryGoodsListProvide>(
+      builder: (context, child, data) {
+        return Expanded(
+          child: Container(
+              margin: EdgeInsets.only(top: 2.0),
+              width: ScreenUtil().setWidth(570),
+              // height: ScreenUtil().setHeight(1000),
+              // margin: EdgeInsets.only(left: 2.5),
+              child: ListView(
+                children: <Widget>[_wrapList(data.goodsList)],
+                // scrollDirection: Axis.vertical,
+              )),
+        );
+      },
     );
   }
 
-  void getGoodsList() async {
-    var formData = {'categoryId': '4', 'CategorySubId': '', 'page': 1};
-    getMallGoods(formData).then((val) {
-      var data = json.decode(val.toString());
-      print('商品列表》》》》》》》$data');
-    });
+  Widget _wrapList(List<MallGoodsListData> list) {
+    if (list.length != 0) {
+      List<Widget> listWidget = list.map((val) {
+        return InkWell(
+          onTap: () {},
+          child: Container(
+            width: ScreenUtil().setWidth(280),
+            color: Colors.white,
+            padding: EdgeInsets.all(5.0),
+            margin: EdgeInsets.only(bottom: 3.0),
+            child: Column(
+              children: <Widget>[
+                Image.network(
+                  '${val.image}',
+                  width: ScreenUtil().setWidth(280),
+                ),
+                Text(
+                  '${val.goodsName}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                      color: Colors.pink, fontSize: ScreenUtil().setSp(22)),
+                ),
+                Row(
+                  children: <Widget>[
+                    Text(
+                      '￥${val.oriPrice}',
+                      style: TextStyle(
+                          color: Colors.black26,
+                          decoration: TextDecoration.lineThrough,
+                          fontSize: ScreenUtil().setSp(22)),
+                    ),
+                    Text(
+                      '￥${val.presentPrice}',
+                      style: TextStyle(fontSize: ScreenUtil().setSp(22)),
+                    ),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                )
+              ],
+            ),
+          ),
+        );
+      }).toList();
+      return Wrap(
+        spacing: 2,
+        children: listWidget,
+      );
+    } else {
+      return Text('该分类下暂无产品');
+    }
   }
+
+  // Widget _itemImage(index) {
+  //   return Container(
+  //     child: Image.network(goodsList[index].image),
+  //   );
+  // }
 }
