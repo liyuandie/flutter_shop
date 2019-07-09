@@ -4,6 +4,7 @@ import '../provide/details_info.dart';
 import './details_pages/details_top.dart';
 import './details_pages/details_explain.dart';
 import './details_pages/detail_tab_bar.dart';
+import './details_pages/details_webview.dart';
 
 class DetailsPage extends StatelessWidget {
   final String goodsId;
@@ -26,16 +27,17 @@ class DetailsPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Container(
-              child: Column(
+              child: ListView(
                 children: <Widget>[
                   DetailsTop(),
                   DetailsExplainPage(),
-                  DetailsTabBar()
+                  DetailsTabBar(),
+                  DetailsWebview()
                 ],
               ),
             );
           } else {
-            Text('加载中...');
+            return Text('加载中...');
           }
         },
         future: _getDetailsInfo(context),

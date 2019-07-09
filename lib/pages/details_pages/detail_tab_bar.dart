@@ -36,7 +36,7 @@ class DetailsTabBar extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border(
                   bottom: BorderSide(
-            color: state ? Colors.pink : Colors.white,
+            color: state ? Colors.pink : Colors.black12,
             width: 1.0,
           ))),
           child: Text(title,

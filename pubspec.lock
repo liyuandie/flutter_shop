@@ -82,7 +82,7 @@ packages:
       name: flutter_html
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.10.4"
+    version: "0.9.9"
   flutter_page_indicator:
     dependency: transitive
     description:
