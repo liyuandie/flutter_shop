@@ -21,7 +21,7 @@ class DetailsWebview extends StatelessWidget {
         var onLeft = Provide.value<DetailInfoProvide>(context).onLeft;
         Widget _commenItem(context, index) {
           return Container(
-            padding: EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
+            padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(width: 1.0, color: Colors.black12))),

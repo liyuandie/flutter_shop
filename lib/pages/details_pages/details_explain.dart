@@ -11,7 +11,7 @@ class DetailsExplainPage extends StatelessWidget {
       width: ScreenUtil().setWidth(740),
       color: Colors.white,
       margin: EdgeInsets.only(top: 10.0),
-      padding: EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
+      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
       child: Text(
         '说明：>急速送达 >正品保证',
         style: TextStyle(

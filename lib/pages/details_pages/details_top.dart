@@ -62,10 +62,10 @@ class DetailsTop extends StatelessWidget {
 //商品名称
   Widget _goodsName(name) {
     return Container(
-      margin: EdgeInsets.only(top: 8.0),
+      // margin: EdgeInsets.only(top: 8.0),
       color: Colors.white,
       width: ScreenUtil().setWidth(750),
-      padding: EdgeInsets.only(left: 15.0),
+      padding: EdgeInsets.fromLTRB(10.0, 8.0, 0, 0),
       child: Text(
         name,
         style: TextStyle(fontSize: ScreenUtil().setSp(30.0)),
@@ -79,7 +79,7 @@ class DetailsTop extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: ScreenUtil().setWidth(750),
-      padding: EdgeInsets.fromLTRB(15.0, 8.0, 0, 0),
+      padding: EdgeInsets.fromLTRB(10.0, 8.0, 0, 0),
       child: Text('编号:${id}', style: TextStyle(color: Colors.black26)),
     );
   }
@@ -90,8 +90,8 @@ class DetailsTop extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: ScreenUtil().setWidth(730),
-      padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
-      margin: EdgeInsets.only(top: 8.0),
+      padding: EdgeInsets.fromLTRB(10.0, 8.0, 15.0, 8.0),
+      // margin: EdgeInsets.only(top: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
