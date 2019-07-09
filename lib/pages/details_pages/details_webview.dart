@@ -15,14 +15,13 @@ class DetailsWebview extends StatelessWidget {
         .goodsDetail;
     var comment =
         Provide.value<DetailInfoProvide>(context).goodsInfo.data.goodComments;
-    print('22222222222$comment');
 
     return Provide<DetailInfoProvide>(
       builder: (context, child, val) {
         var onLeft = Provide.value<DetailInfoProvide>(context).onLeft;
         Widget _commenItem(context, index) {
           return Container(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.fromLTRB(15.0, 10.0, 10.0, 10.0),
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(width: 1.0, color: Colors.black12))),
@@ -62,8 +61,10 @@ class DetailsWebview extends StatelessWidget {
         } else {
           if (comment.length > 0) {
             return Container(
+              // width: ScreenUtil().setWidth(750),
               height: ScreenUtil().setHeight(1000),
               child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
                 itemCount: comment.length,
                 itemBuilder: (BuildContext context, index) {
                   return _commenItem(context, index);
