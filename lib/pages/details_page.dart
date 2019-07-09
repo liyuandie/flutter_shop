@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../provide/details_info.dart';
 import './details_pages/details_top.dart';
+import './details_pages/details_explain.dart';
+import './details_pages/detail_tab_bar.dart';
 
 class DetailsPage extends StatelessWidget {
   final String goodsId;
@@ -9,7 +11,7 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _getDetailsInfo(context);
+    // _getDetailsInfo(context);
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -25,7 +27,11 @@ class DetailsPage extends StatelessWidget {
           if (snapshot.hasData) {
             return Container(
               child: Column(
-                children: <Widget>[DetailsTop()],
+                children: <Widget>[
+                  DetailsTop(),
+                  DetailsExplainPage(),
+                  DetailsTabBar()
+                ],
               ),
             );
           } else {

@@ -43,7 +43,7 @@ class DetailsTop extends StatelessWidget {
       ..add(goodsInfo.image1)
       ..add(goodsInfo.image1);
     return Container(
-      width: ScreenUtil().setWidth(740),
+      width: ScreenUtil().setWidth(750),
       height: ScreenUtil().setHeight(580),
       child: Swiper(
         itemBuilder: (BuildContext context, int index) {
@@ -64,7 +64,7 @@ class DetailsTop extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 8.0),
       color: Colors.white,
-      width: ScreenUtil().setWidth(740),
+      width: ScreenUtil().setWidth(750),
       padding: EdgeInsets.only(left: 15.0),
       child: Text(
         name,
@@ -78,7 +78,7 @@ class DetailsTop extends StatelessWidget {
   Widget _goodsId(id) {
     return Container(
       color: Colors.white,
-      width: ScreenUtil().setWidth(740),
+      width: ScreenUtil().setWidth(750),
       padding: EdgeInsets.fromLTRB(15.0, 8.0, 0, 0),
       child: Text('编号:${id}', style: TextStyle(color: Colors.black26)),
     );
@@ -90,7 +90,7 @@ class DetailsTop extends StatelessWidget {
     return Container(
       color: Colors.white,
       width: ScreenUtil().setWidth(730),
-      padding: EdgeInsets.fromLTRB(15.0, 8.0, 0, 8.0),
+      padding: EdgeInsets.fromLTRB(15.0, 8.0, 15.0, 8.0),
       margin: EdgeInsets.only(top: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
