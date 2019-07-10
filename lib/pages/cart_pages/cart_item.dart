@@ -34,7 +34,7 @@ class CartItem extends StatelessWidget {
   Widget _cartCheckBtn() {
     return Container(
       child: Checkbox(
-        value: true,
+        value: item.isCheck,
         activeColor: Colors.pink,
         onChanged: (bool val) {},
       ),
