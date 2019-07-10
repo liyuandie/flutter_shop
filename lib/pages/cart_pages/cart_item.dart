@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/model/cart_info.dart';
 import '../../provide/cart.dart';
+import './cart_count.dart';
 
 class CartItem extends StatelessWidget {
   final CartInfoModel item;
@@ -43,7 +44,7 @@ class CartItem extends StatelessWidget {
   // 商品图片
   Widget _cartImage() {
     return Container(
-      width: ScreenUtil().setWidth(150),
+      height: ScreenUtil().setHeight(130),
       padding: EdgeInsets.all(3.0),
       decoration:
           BoxDecoration(border: Border.all(width: 0.5, color: Colors.black12)),
@@ -55,10 +56,19 @@ class CartItem extends StatelessWidget {
   Widget _cartGoodsName() {
     return Container(
       width: ScreenUtil().setWidth(300),
-      padding: EdgeInsets.all(10),
+      height: ScreenUtil().setHeight(130),
+      padding: EdgeInsets.only(left: 10),
       alignment: Alignment.topLeft,
       child: Column(
-        children: <Widget>[Text(item.goodsName)],
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Text(
+            item.goodsName,
+            style: TextStyle(fontSize: ScreenUtil().setSp(27)),
+          ),
+          CartCount(),
+        ],
       ),
     );
   }
@@ -85,7 +95,8 @@ class CartItem extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.black26,
                     fontSize: ScreenUtil().setSp(24),
-                    decoration: TextDecoration.lineThrough),
+                    decoration: TextDecoration.lineThrough,
+                    fontWeight: FontWeight.w300),
               ),
             ],
           ),
