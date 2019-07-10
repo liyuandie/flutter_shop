@@ -22,16 +22,42 @@ class DetailsBottom extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          InkWell(
-            onTap: () {
-              Provide.value<RouterProvide>(context).changeIndex(2);
-              Navigator.pop(context);
-            },
-            child: Container(
-              width: ScreenUtil().setWidth(130.0),
-              alignment: Alignment.center,
-              child: Icon(Icons.shopping_cart, size: 35, color: Colors.red),
-            ),
+          Stack(
+            children: <Widget>[
+              InkWell(
+                onTap: () {
+                  Provide.value<RouterProvide>(context).changeIndex(2);
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  width: ScreenUtil().setWidth(130.0),
+                  alignment: Alignment.center,
+                  child: Icon(Icons.shopping_cart, size: 35, color: Colors.red),
+                ),
+              ),
+              Provide<CartProvide>(
+                builder: (context, child, val) {
+                  var count = Provide.value<CartProvide>(context).totalCount;
+                  return Positioned(
+                    top: 0,
+                    right: 10,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          border: Border.all(width: 2, color: Colors.white),
+                          borderRadius: BorderRadius.circular(12.0)),
+                      child: Text(
+                        count.toString(),
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: ScreenUtil().setSp(22)),
+                      ),
+                    ),
+                  );
+                },
+              )
+            ],
           ),
           InkWell(
             onTap: () {
