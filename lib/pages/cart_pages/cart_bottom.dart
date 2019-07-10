@@ -14,7 +14,7 @@ class CartBottom extends StatelessWidget {
           builder: (context, child, val) {
             return Row(
               children: <Widget>[
-                _selectAllBtn(),
+                _selectAllBtn(context),
                 _allPrice(context),
                 _accountBtn(context)
               ],
@@ -24,15 +24,17 @@ class CartBottom extends StatelessWidget {
   }
 
   //复选框
-  Widget _selectAllBtn() {
+  Widget _selectAllBtn(context) {
     return Container(
       width: ScreenUtil().setWidth(150),
       child: Row(
         children: <Widget>[
           Checkbox(
-            value: true,
+            value: Provide.value<CartProvide>(context).isAllCheck,
             activeColor: Colors.pink,
-            onChanged: (bool val) {},
+            onChanged: (bool val) {
+              Provide.value<CartProvide>(context).allCheck(val);
+            },
           ),
           Container(
             child: Text('全选'),

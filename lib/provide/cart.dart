@@ -10,6 +10,7 @@ class CartProvide with ChangeNotifier {
 
   double totalPrice = 0.0; //总价
   int totalCount = 0;
+  bool isAllCheck = true; // 是否全选
 
   save(goodsId, goodsName, count, oriPrice, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -64,11 +65,14 @@ class CartProvide with ChangeNotifier {
       List<Map> tempList = (json.decode(cartString) as List).cast();
       totalCount = 0;
       totalPrice = 0.0;
+      isAllCheck = true;
 
       tempList.forEach((item) {
         if (item['isCheck']) {
           totalPrice += (item['count'] * item['price']);
           totalCount += item['count'];
+        } else {
+          isAllCheck = false;
         }
         cartList.add(CartInfoModel.fromJson(item));
       });
@@ -94,5 +98,43 @@ class CartProvide with ChangeNotifier {
     cartString = json.encode(tempList).toString();
     prefs.setString('cartInfo', cartString);
     getCartInfo();
+  }
+
+  // 改变商品Check状态
+  changeCheckState(CartInfoModel goods) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartString = prefs.getString('cartInfo');
+    List<Map> tempList = (json.decode(cartString) as List).cast();
+
+    int index = 0;
+    int changeIndex = 0;
+
+    tempList.forEach((item) {
+      if (item['goodsId'] == goods.goodsId) {
+        changeIndex = index;
+      }
+      index++;
+    });
+    tempList[changeIndex] = goods.toJson();
+    cartString = json.encode(tempList).toString();
+    prefs.setString('cartInfo', cartString);
+    await getCartInfo();
+  }
+
+  // 全选商品
+  allCheck(bool isCheck) async {
+    print('全选');
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // cartString = prefs.getString('cartInfo');
+    List<Map> tempList = (json.decode(cartString) as List).cast();
+    List<Map> newList = [];
+    for (var item in tempList) {
+      var newItem = item;
+      newItem['isCheck'] = isCheck;
+      newList.add(newItem);
+    }
+    cartString = json.encode(newList).toString();
+    prefs.setString('cartInfo', cartString);
+    await getCartInfo();
   }
 }
