@@ -18,8 +18,8 @@ Future requestData(url, {formData}) async {
       response = await dio.post(servicePath[url], data: formData);
     }
     if (response.statusCode == 200) {
-      var _data = json.decode(response.data.toString());
-      print(_data['data']);
+      // var _data = json.decode(response.data.toString());
+      // print(_data['data']);
       return response.data;
     } else {
       throw Exception('后端接口有异常');

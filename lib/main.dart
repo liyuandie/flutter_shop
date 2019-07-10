@@ -4,6 +4,7 @@ import 'package:flutter_shop/pages/index_page.dart';
 import './provide/childCategory.dart';
 import './provide/category_goods_list.dart';
 import './provide/details_info.dart';
+import './provide/cart.dart';
 import 'package:provide/provide.dart';
 import 'package:fluro/fluro.dart';
 import './route/index.dart';
@@ -13,12 +14,14 @@ void main() {
   var childCategory = ChildCategory();
   var categoryGoodsList = CategoryGoodsListProvide();
   var detailsInfoProvide = DetailInfoProvide();
+  var cartProvide = CartProvide();
   var providers = Providers();
 
   providers..provide(Provider<ChildCategory>.value(childCategory));
   providers
     ..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsList));
   providers..provide(Provider<DetailInfoProvide>.value(detailsInfoProvide));
+  providers..provide(Provider<CartProvide>.value(cartProvide));
   runApp(ProviderNode(
     child: MyApp(),
     providers: providers,

@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
 import '../../provide/details_info.dart';
+import '../../provide/cart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailsBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var goodsInfo =
+        Provide.value<DetailInfoProvide>(context).goodsInfo.data.goodInfo;
+    var goodsId = goodsInfo.goodsId;
+    var goodsName = goodsInfo.goodsName;
+    var count = 1;
+    var price = goodsInfo.presentPrice;
+    var images = goodsInfo.image1;
     return Container(
       width: ScreenUtil().setWidth(750),
       height: ScreenUtil().setHeight(100),
@@ -21,7 +29,10 @@ class DetailsBottom extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Provide.value<CartProvide>(context)
+                  .save(goodsId, goodsName, count, price, images);
+            },
             child: Container(
               width: ScreenUtil().setWidth(310),
               color: Colors.green,
@@ -33,7 +44,9 @@ class DetailsBottom extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Provide.value<CartProvide>(context).clear();
+            },
             child: Container(
               width: ScreenUtil().setWidth(310),
               color: Colors.red,
