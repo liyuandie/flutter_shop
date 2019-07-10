@@ -3,6 +3,7 @@ import 'package:provide/provide.dart';
 import '../../provide/details_info.dart';
 import '../../provide/cart.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../provide/router.dart';
 
 class DetailsBottom extends StatelessWidget {
   @override
@@ -22,7 +23,10 @@ class DetailsBottom extends StatelessWidget {
       child: Row(
         children: <Widget>[
           InkWell(
-            onTap: () {},
+            onTap: () {
+              Provide.value<RouterProvide>(context).changeIndex(2);
+              Navigator.pop(context);
+            },
             child: Container(
               width: ScreenUtil().setWidth(130.0),
               alignment: Alignment.center,
