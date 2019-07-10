@@ -10,14 +10,15 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(item);
+    // print(item);
     return Container(
-      margin: EdgeInsets.fromLTRB(5.0, 2.0, 5.0, 2.0),
-      padding: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+      margin: EdgeInsets.fromLTRB(0, 2.0, 0, 2.0),
+      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(bottom: BorderSide(width: 1, color: Colors.black12))),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           _cartCheckBtn(),
           _cartImage(),
@@ -66,21 +67,38 @@ class CartItem extends StatelessWidget {
   Widget _cartPrice() {
     return Container(
       width: ScreenUtil().setWidth(150),
-      height: ScreenUtil().setHeight(100),
+      // height: ScreenUtil().setHeight(100),
       alignment: Alignment.centerRight,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: <Widget>[
-          Text('￥${item.price}'),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Text('￥ ${item.price}',
+                  style: TextStyle(
+                      fontSize: ScreenUtil().setSp(30),
+                      fontWeight: FontWeight.w300)),
+              Text(
+                '￥ ${item.oriPrice}',
+                style: TextStyle(
+                    color: Colors.black26,
+                    fontSize: ScreenUtil().setSp(24),
+                    decoration: TextDecoration.lineThrough),
+              ),
+            ],
+          ),
           Container(
+              padding: EdgeInsets.only(top: 15),
               child: InkWell(
-            onTap: () {},
-            child: Icon(
-              Icons.delete,
-              color: Colors.black26,
-              size: 30,
-            ),
-          ))
+                onTap: () {},
+                child: Icon(
+                  Icons.delete,
+                  color: Colors.black26,
+                  size: 25,
+                ),
+              ))
         ],
       ),
     );

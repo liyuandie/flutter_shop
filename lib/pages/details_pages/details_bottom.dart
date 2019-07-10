@@ -14,6 +14,7 @@ class DetailsBottom extends StatelessWidget {
     var count = 1;
     var price = goodsInfo.presentPrice;
     var images = goodsInfo.image1;
+    var oriPrice = goodsInfo.oriPrice;
     return Container(
       width: ScreenUtil().setWidth(750),
       height: ScreenUtil().setHeight(100),
@@ -31,7 +32,7 @@ class DetailsBottom extends StatelessWidget {
           InkWell(
             onTap: () {
               Provide.value<CartProvide>(context)
-                  .save(goodsId, goodsName, count, price, images);
+                  .save(goodsId, goodsName, count, oriPrice, price, images);
             },
             child: Container(
               width: ScreenUtil().setWidth(310),

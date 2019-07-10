@@ -8,7 +8,7 @@ class CartProvide with ChangeNotifier {
 
   List<CartInfoModel> cartList = [];
 
-  save(goodsId, goodsName, count, price, images) async {
+  save(goodsId, goodsName, count, oriPrice, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');
     var temp = cartString == null ? [] : json.decode(cartString.toString());
@@ -29,6 +29,7 @@ class CartProvide with ChangeNotifier {
         'goodsId': goodsId,
         'goodsName': goodsName,
         'count': count,
+        'oriPrice': oriPrice,
         'price': price,
         'images': images
       };
@@ -36,7 +37,7 @@ class CartProvide with ChangeNotifier {
       cartList.add(CartInfoModel.fromJson(newGoods));
     }
     cartString = json.encode(tempList).toString();
-    print(cartString);
+    // print(cartString);
     prefs.setString('cartInfo', cartString);
     notifyListeners();
   }
