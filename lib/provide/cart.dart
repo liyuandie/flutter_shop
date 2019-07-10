@@ -8,6 +8,9 @@ class CartProvide with ChangeNotifier {
 
   List<CartInfoModel> cartList = [];
 
+  double totalPrice = 0.0; //总价
+  int totalCount = 0;
+
   save(goodsId, goodsName, count, oriPrice, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');
@@ -59,7 +62,14 @@ class CartProvide with ChangeNotifier {
       cartList = [];
     } else {
       List<Map> tempList = (json.decode(cartString) as List).cast();
+      totalCount = 0;
+      totalPrice = 0.0;
+
       tempList.forEach((item) {
+        if (item['isCheck']) {
+          totalPrice += (item['count'] * item['price']);
+          totalCount += item['count'];
+        }
         cartList.add(CartInfoModel.fromJson(item));
       });
     }
@@ -83,6 +93,6 @@ class CartProvide with ChangeNotifier {
     tempList.removeAt(detIndex);
     cartString = json.encode(tempList).toString();
     prefs.setString('cartInfo', cartString);
-    notifyListeners();
+    getCartInfo();
   }
 }

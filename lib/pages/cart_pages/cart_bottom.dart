@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shop/model/cart_info.dart';
+import 'package:provide/provide.dart';
+import '../../provide/cart.dart';
 
 class CartBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-      color: Colors.white,
-      child: Row(
-        children: <Widget>[_selectAllBtn(), _allPrice(), _accountBtn()],
-      ),
-    );
+        padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+        color: Colors.white,
+        child: Provide<CartProvide>(
+          builder: (context, child, val) {
+            return Row(
+              children: <Widget>[
+                _selectAllBtn(),
+                _allPrice(context),
+                _accountBtn(context)
+              ],
+            );
+          },
+        ));
   }
 
   //复选框
@@ -34,7 +43,7 @@ class CartBottom extends StatelessWidget {
   }
 
   // 价格
-  Widget _allPrice() {
+  Widget _allPrice(context) {
     return Container(
       width: ScreenUtil().setWidth(430),
       padding: EdgeInsets.only(right: 20.0),
@@ -52,7 +61,7 @@ class CartBottom extends StatelessWidget {
               ),
               Container(
                 child: Text(
-                  '￥1992.0',
+                  Provide.value<CartProvide>(context).totalPrice.toString(),
                   style: TextStyle(
                       fontSize: ScreenUtil().setSp(35), color: Colors.red),
                 ),
@@ -74,7 +83,7 @@ class CartBottom extends StatelessWidget {
   }
 
   // 结算
-  Widget _accountBtn() {
+  Widget _accountBtn(context) {
     return Container(
       child: InkWell(
         onTap: () {},
@@ -84,7 +93,7 @@ class CartBottom extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.red, borderRadius: BorderRadius.circular(3.0)),
           child: Text(
-            '结算(6)',
+            '结算(${Provide.value<CartProvide>(context).totalCount.toString()})',
             style: TextStyle(color: Colors.white),
           ),
         ),
