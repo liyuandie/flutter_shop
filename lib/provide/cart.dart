@@ -123,7 +123,6 @@ class CartProvide with ChangeNotifier {
 
   // 全选商品
   allCheck(bool isCheck) async {
-    print('全选');
     SharedPreferences prefs = await SharedPreferences.getInstance();
     // cartString = prefs.getString('cartInfo');
     List<Map> tempList = (json.decode(cartString) as List).cast();
@@ -134,6 +133,33 @@ class CartProvide with ChangeNotifier {
       newList.add(newItem);
     }
     cartString = json.encode(newList).toString();
+    prefs.setString('cartInfo', cartString);
+    await getCartInfo();
+  }
+
+  // 改变商品数量
+  changeGoodsCount(CartInfoModel goods, String type) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    // cartString = prefs.getString('cartInfo');
+    List<Map> tempList = (json.decode(cartString) as List).cast();
+
+    int index = 0;
+    int changeIndex = 0;
+
+    tempList.forEach((item) {
+      if (item['goodsId'] == goods.goodsId) {
+        changeIndex = index;
+      }
+      index++;
+    });
+
+    if (type == 'add') {
+      goods.count++;
+    } else if (goods.count > 1) {
+      goods.count--;
+    }
+    tempList[changeIndex] = goods.toJson();
+    cartString = json.encode(tempList).toString();
     prefs.setString('cartInfo', cartString);
     await getCartInfo();
   }

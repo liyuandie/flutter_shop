@@ -71,7 +71,7 @@ class CartItem extends StatelessWidget {
             item.goodsName,
             style: TextStyle(fontSize: ScreenUtil().setSp(27)),
           ),
-          CartCount(),
+          CartCount(item),
         ],
       ),
     );
