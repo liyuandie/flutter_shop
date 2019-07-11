@@ -6,7 +6,13 @@
 
 ![](assets/images/app_show.jpg)
 
+## 下载体验
+
 ## 运行项目
+
+扫描二维码下载体验：
+
+![](assets/images/baixingQR.png)
 
 ### 安装 flutter
 
