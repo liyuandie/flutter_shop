@@ -411,7 +411,7 @@ class Recommond extends StatelessWidget {
       height: ScreenUtil().setHeight(330),
       // margin: EdgeInsets.only(top: 10.0),
       child: ListView.builder(
-        physics: NeverScrollableScrollPhysics(),
+        // physics: NeverScrollableScrollPhysics(),
         scrollDirection: Axis.horizontal,
         itemCount: recommendList.length,
         itemBuilder: (context, index) {
