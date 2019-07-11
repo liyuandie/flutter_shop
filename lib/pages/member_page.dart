@@ -20,9 +20,7 @@ class MemberPage extends StatelessWidget {
       decoration: BoxDecoration(
           image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(
-                'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=277237570,297498983&fm=26&gp=0.jpg',
-              ))),
+              image: AssetImage('assets/images/background.png'))),
       width: ScreenUtil().setWidth(750),
       height: ScreenUtil().setHeight(350),
       child: Column(
@@ -34,8 +32,7 @@ class MemberPage extends StatelessWidget {
                 border: Border.all(width: 1.0, color: Colors.white),
                 borderRadius: BorderRadius.circular(60)),
             child: ClipOval(
-              child: Image.network(
-                  'https://tvax4.sinaimg.cn/crop.0.0.1002.1002.180/0064snFfly8fynhndio35j30ru0rutas.jpg?Expires=1562819117&ssig=zKBqcA6ovy&KID=imgbed,tva'),
+              child: Image.asset('assets/images/irving.jpeg'),
             ),
           ),
           Container(
