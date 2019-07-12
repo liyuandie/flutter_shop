@@ -17,13 +17,14 @@ class ChildCategory with ChangeNotifier {
     page = 1;
     noMoreText = '';
     BxMallSubDto all = BxMallSubDto();
-    all.mallSubId = '00';
+    all.mallSubId = '';
     all.mallCategoryId = '00';
     all.comments = null;
     all.mallSubName = '全部';
 
     childCategoryList = [all];
     childCategoryList.addAll(list);
+    categorySubId = '';
     notifyListeners();
   }
 
@@ -34,6 +35,7 @@ class ChildCategory with ChangeNotifier {
     categorySubId = id;
     page = 1;
     noMoreText = '';
+
     notifyListeners();
   }
 

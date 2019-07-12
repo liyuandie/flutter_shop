@@ -18,20 +18,12 @@ class _HomePageState extends State<HomePage>
   List<Map> hotGoodsList = [];
   GlobalKey<RefreshFooterState> _footerkey =
       new GlobalKey<RefreshFooterState>();
+  GlobalKey<RefreshHeaderState> _headerKey =
+      new GlobalKey<RefreshHeaderState>();
   @override
   bool get wantKeepAlive => true;
 
   String homePageContent = '正在获取数据';
-
-  // @override
-  // void initState() {
-  //   getHomePageContent().then((val) {
-  //     setState(() {
-  //       homePageContent = val.toString();
-  //     });
-  //   });
-  //   super.initState();
-  // }
 
   @override
   void initState() {
@@ -74,12 +66,15 @@ class _HomePageState extends State<HomePage>
               return EasyRefresh(
                 refreshFooter: ClassicsFooter(
                   bgColor: Colors.white,
-                  textColor: Colors.pink,
-                  moreInfoColor: Colors.pink,
+                  textColor: Colors.black38,
+                  moreInfoColor: Colors.black38,
                   showMore: true,
-                  noMoreText: '',
+                  noMoreText: '已经到底啦',
                   moreInfo: '加载中...',
-                  loadReadyText: '上拉加载',
+                  loadReadyText: '松手加载',
+                  loadText: '上拉加载更多',
+                  loadingText: '加载中...',
+                  loadedText: '加载成功',
                   key: _footerkey,
                 ),
                 child: ListView(
@@ -118,6 +113,17 @@ class _HomePageState extends State<HomePage>
                   ],
                 ),
                 loadMore: _getHotGoods,
+                onRefresh: getHomePageContent,
+                refreshHeader: ClassicsHeader(
+                  bgColor: Colors.white,
+                  key: _headerKey,
+                  textColor: Colors.black38,
+                  refreshingText: '加载中...',
+                  refreshText: '下拉释放刷新',
+                  refreshReadyText: '释放刷新',
+                  refreshedText: '刷新成功',
+                ),
+
                 // loadMore: () async {
                 //   print('加载中....');
                 //   var formPage = {'page': page};
