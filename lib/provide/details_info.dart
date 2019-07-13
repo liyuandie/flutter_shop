@@ -12,6 +12,7 @@ class DetailInfoProvide with ChangeNotifier {
 
   // 从后台获取商品详情信息
   getGoodsDetailInfo(String id) async {
+    switchTab('left');
     var formData = {'goodId': id};
     await getGoodsDetail(formData).then((val) {
       var responseData = json.decode(val.toString());

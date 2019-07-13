@@ -43,7 +43,7 @@ class DetailsWebview extends StatelessWidget {
                   child: Text(
                     DateTime.fromMillisecondsSinceEpoch(
                       comment[index].discussTime,
-                    ).toString(),
+                    ).toString().replaceRange(18, 22, ''),
                     style: TextStyle(color: Colors.black38),
                   ),
                 )
@@ -62,7 +62,7 @@ class DetailsWebview extends StatelessWidget {
           if (comment.length > 0) {
             return Container(
               // width: ScreenUtil().setWidth(750),
-              height: ScreenUtil().setHeight(1000),
+              height: ScreenUtil().setHeight(2000),
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: comment.length,
