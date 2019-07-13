@@ -8,7 +8,10 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../route/application.dart';
 import '../provide/homePage.dart';
+import '../provide/childCategory.dart';
+import '../provide/category_goods_list.dart';
 import '../model/homeContent.dart';
+import '../provide/router.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -179,7 +182,16 @@ class TopNavigator extends StatelessWidget {
   Widget _gridViewItemUI(BuildContext context, item) {
     return InkWell(
       onTap: () {
+        // var list = Provide.value<CategoryGoodsListProvide>(context).list;
+        // var categoryId = item.mallCategoryId;
         print('点击了导航');
+        Provide.value<RouterProvide>(context).changeIndex(1);
+        // Provide.value<CategoryGoodsListProvide>(context)
+        //     .changeCurrentIndex(item);
+        //  Provide.value<ChildCategory>(context)
+        //     .getChildCategory(childList, item.mallCategoryId);
+        // Provide.value<CategoryGoodsListProvide>(context)
+        //           .changeGoodsList(context);
       },
       child: Column(
         children: <Widget>[
