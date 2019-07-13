@@ -164,7 +164,7 @@ class MemberPage extends StatelessWidget {
                     border: Border(
                         bottom: BorderSide(width: 0.5, color: Colors.black12))),
                 child: ListTile(
-                  leading: Icon(Icons.card_giftcard),
+                  leading: Icon(Icons.check_circle),
                   title: Text('已领取优惠券'),
                   trailing: Icon(CupertinoIcons.right_chevron),
                 ),
@@ -175,7 +175,7 @@ class MemberPage extends StatelessWidget {
                     border: Border(
                         bottom: BorderSide(width: 0.5, color: Colors.black12))),
                 child: ListTile(
-                  leading: Icon(Icons.card_giftcard),
+                  leading: Icon(Icons.location_on),
                   title: Text('地址管理'),
                   trailing: Icon(CupertinoIcons.right_chevron),
                 ),
@@ -193,7 +193,7 @@ class MemberPage extends StatelessWidget {
                     border: Border(
                         bottom: BorderSide(width: 0.5, color: Colors.black12))),
                 child: ListTile(
-                  leading: Icon(Icons.card_giftcard),
+                  leading: Icon(Icons.phone_android),
                   title: Text('联系我们'),
                   trailing: Icon(CupertinoIcons.right_chevron),
                 ),
@@ -204,7 +204,7 @@ class MemberPage extends StatelessWidget {
                     border: Border(
                         bottom: BorderSide(width: 0.5, color: Colors.black12))),
                 child: ListTile(
-                  leading: Icon(Icons.card_giftcard),
+                  leading: Icon(Icons.info),
                   title: Text('关于商城'),
                   trailing: Icon(CupertinoIcons.right_chevron),
                 ),
