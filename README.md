@@ -10,7 +10,7 @@
 
 ## 下载体验
 
-扫描二维码下载体验：
+flutter原生体验更好，我打包了Android安装包供下载体验，扫描下方二维码即可下载：
 
 ![](assets/images/baixingQR.png)
 
