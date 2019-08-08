@@ -4,6 +4,8 @@
 
 长期更新，欢迎讨论，共同进步。
 
+ps:来都来了，给个star吧🐶
+
 ## 效果预览
 
 ![](assets/images/app_show.jpg)
