@@ -4,13 +4,15 @@
 
 长期更新，欢迎讨论，共同进步。
 
+ps:来都来了，给个star吧🐶
+
 ## 效果预览
 
 ![](assets/images/app_show.jpg)
 
 ## 下载体验
 
-扫描二维码下载体验：
+flutter原生体验更好，我打包了Android安装包供下载体验，扫描下方二维码即可下载：
 
 ![](assets/images/baixingQR.png)
 
