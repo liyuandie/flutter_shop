@@ -1,5 +1,6 @@
 // const serviceUrl = 'http://test.baixingliangfan.cn/baixing/';
-// const serviceUrl = 'http://baixingliangfan.cn/baixing/';
+// const serviceUrl =
+//     'https://wxmini.baixingliangfan.cn/baixing/'; //小程序接口，charles获取
 const serviceUrl = 'http://v.jspang.com:8088/baixing/';
 
 const servicePath = {
